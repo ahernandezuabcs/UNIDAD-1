@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas</title>
+    <style type="text/css">
+        body{
+            background-color: gray;
+        }
+        canvas{
+            background-color: white;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="myCanvas" width="500" height="500"></canvas>
+     <script>
+        const myCanvas = document.getElementById("myCanvas");
+        const ctx = myCanvas.getContext("2d");
+        
+        ctx.fillStyle = "#F84A9D";
+        ctx.fillRect(20,20,100,100)
+        
+        ctx.fillStyle = "black";
+        ctx.fillRect(180,180,100,100)
+        ctx.fillStyle = "rgba(112,24,32,0.5)";
+        ctx.fillRect(100,100,100,100)
+        
+     </script>
+</body>
+</html>
