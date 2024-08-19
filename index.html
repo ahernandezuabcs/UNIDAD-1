@@ -9,7 +9,7 @@
             background-color: gray;
         }
         canvas{
-            background-color: rgb(135,206,235);
+            background-color: rgb(0, 46, 63);
         }
     </style>
 </head>
@@ -42,6 +42,7 @@
         ctx.strokeRect(25,300,50,50)
         ctx.fill="black"
        
+
         // marcos de ventana
         ctx.beginPath()
         ctx.moveTo(145,300)
@@ -54,17 +55,24 @@
         ctx.lineTo(75,325)
         ctx.closePath();
         ctx.stroke();
-        ctx.fill();
+        
 
         // techo de casa
         ctx.beginPath();
         ctx.moveTo(0,270)
-        ctx.lineTo(470,270)
-        ctx.lineTo(235,235)
+        ctx.lineTo(204,270)
+        ctx.lineTo(100,180)
         ctx.closePath()
-        ctx.stroke();
-        ctx.fill()
+         ctx.stroke();
+        // ctx.fillStyle="rgb(78, 34, 34)"
+        // ctx.fill();
+
         
+        ctx.beginPath();
+        ctx.arc(460, 33, 50, 0, 2 * Math.PI);
+        
+        ctx.closePath()
+        ctx.stroke()
        
 
 
