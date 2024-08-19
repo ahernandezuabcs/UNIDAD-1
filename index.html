@@ -9,7 +9,7 @@
             background-color: gray;
         }
         canvas{
-            background-color: white;
+            background-color: rgb(135,206,235);
         }
     </style>
 </head>
@@ -18,14 +18,57 @@
      <script>
         const myCanvas = document.getElementById("myCanvas");
         const ctx = myCanvas.getContext("2d");
+        // pasto
+        ctx.fillStyle = "#24ca3d";
+        ctx.fillRect(0,400,500,100)
+        // casa
+        ctx.lineWidth = "5"
+        ctx.strokeRect(3,270,200,130)
+        ctx.fill="black"
+
+        ctx.fillStyle="#F2F0Eb"
+        ctx.fillRect(3,270,200,130)
+      // ventanas
+        ctx.fillStyle="yellow"
+        ctx.fillRect(120,300,50,50)
+        ctx.stroke
+
+        ctx.lineWidth = "2"
+        ctx.strokeRect(120,300,50,50)
+        ctx.fillStyle="yellow"
+        ctx.fillRect(25,300,50,50)
+
+        ctx.lineWidth = "2"
+        ctx.strokeRect(25,300,50,50)
+        ctx.fill="black"
+       
+        // marcos de ventana
+        ctx.beginPath()
+        ctx.moveTo(145,300)
+        ctx.lineTo(145,350)
+        ctx.moveTo(120,325)
+        ctx.lineTo(170,325)
+        ctx.moveTo(50,300)
+        ctx.lineTo(50,350)
+        ctx.moveTo(25,325)
+        ctx.lineTo(75,325)
+        ctx.closePath();
+        ctx.stroke();
+        ctx.fill();
+
+        // techo de casa
+        ctx.beginPath();
+        ctx.moveTo(0,270)
+        ctx.lineTo(470,270)
+        ctx.lineTo(235,235)
+        ctx.closePath()
+        ctx.stroke();
+        ctx.fill()
         
-        ctx.fillStyle = "#F84A9D";
-        ctx.fillRect(20,20,100,100)
-        
-        ctx.fillStyle = "black";
-        ctx.fillRect(180,180,100,100)
-        ctx.fillStyle = "rgba(112,24,32,0.5)";
-        ctx.fillRect(100,100,100,100)
+       
+
+
+
         
      </script>
 </body>
