@@ -23,14 +23,15 @@
         const ctx = myCanvas.getContext("2d");
 
 
-        const gradient = ctx.createLinearGradient(0, 0, 170, 0);
-        gradient.addColorStop(0, "green");
-        gradient.addColorStop(0.5, "white");
-        gradient.addColorStop(1, "red");
+        const gradient = ctx.createRadialGradient(75, 50, 5, 90, 60, 100);
+        gradient.addColorStop(0, "#3A1078");
+        gradient.addColorStop(0.5, "#4E31AA");
+        gradient.addColorStop(1, "#3795BD")
 
-        // Fill Rectangle
+        // Draw filled Rectangle
         ctx.fillStyle = gradient;
-        ctx.fillRect(20, 20, 150, 100);
+        ctx.fillRect(10, 10, 150, 100);
+        
 
         // ctx.font = "80px Arial";
         // ctx.lineWidth= 3;
