@@ -22,19 +22,21 @@
         const myCanvas = document.getElementById("myCanvas");
         const ctx = myCanvas.getContext("2d");
 
-        var img1 = new Image();
-        img1.src = 'banderines sector.png';
-        // ctx.drawImage(img1, 200, 200, 200, 270);
 
-        img1.onload = function() {
-            ctx.drawImage(img1, 200, 200, 200, 270);
-        };
+        const gradient = ctx.createLinearGradient(0, 0, 170, 0);
+        gradient.addColorStop(0, "green");
+        gradient.addColorStop(0.5, "white");
+        gradient.addColorStop(1, "red");
+
+        // Fill Rectangle
+        ctx.fillStyle = gradient;
+        ctx.fillRect(20, 20, 150, 100);
 
         // ctx.font = "80px Arial";
         // ctx.lineWidth= 3;
         // ctx.strokeText("Hello World!", 15, 260);
         // ctx.fillText("Hello World!", 10, 250);
-        
+
     </script>
 </body>
 
