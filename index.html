@@ -1,83 +1,194 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Canvas</title>
     <style type="text/css">
-        body{
+        body {
             background-color: gray;
         }
-        canvas{
+
+        canvas {
             background-color: rgb(0, 46, 63);
         }
     </style>
 </head>
+
 <body>
     <canvas id="myCanvas" width="500" height="500"></canvas>
-     <script>
+    <script>
+        const myCanvas = document.getElementById("myCanvas");
+        const ctx = myCanvas.getContext("2d");
+
+        // pasto
+        ctx.fillStyle = "#24ca3d";
+        ctx.fillRect(0, 400, 500, 100);
+
+        // casa
+        ctx.lineWidth = "5";
+        ctx.strokeRect(3, 270, 200, 130);
+
+        ctx.fillStyle = "#F2F0Eb";
+        ctx.fillRect(3, 270, 200, 130);
+
+        // ventanas
+        ctx.fillStyle = "yellow";
+        ctx.fillRect(120, 300, 50, 50);
+        ctx.lineWidth = "2";
+        ctx.strokeRect(120, 300, 50, 50);
+
+        ctx.fillRect(25, 300, 50, 50);
+        ctx.strokeRect(25, 300, 50, 50);
+
+        // marcos de ventana
+        ctx.beginPath();
+        ctx.moveTo(145, 300);
+        ctx.lineTo(145, 350);
+        ctx.moveTo(120, 325);
+        ctx.lineTo(170, 325);
+        ctx.moveTo(50, 300);
+        ctx.lineTo(50, 350);
+        ctx.moveTo(25, 325);
+        ctx.lineTo(75, 325);
+        ctx.stroke();
+
+        // techo de casa
+        ctx.beginPath();
+        ctx.fillStyle = "rgb(240,96,0)";
+        ctx.moveTo(0, 270);
+        ctx.lineTo(204, 270);
+        ctx.lineTo(100, 180);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+
+        // luna
+        ctx.beginPath();
+        ctx.arc(460, 70, 85, 0, Math.PI * 2, true);
+        ctx.fillStyle = "white"; 
+        // ctx.arc(400, 70, 10, 0, Math.PI * 2, true); 
+        // ctx.fillStyle = "gray"; 
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.arc(400,70,10,0,Math.PI*2);
+        ctx.fillStyle="rgba(154,154,154,0.3)";
+        ctx.fill()
+
+    </script>
+</body>
+
+</html>
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas</title>
+    <style type="text/css">
+        body {
+            background-color: gray;
+        }
+
+        canvas {
+            background-color: rgb(0, 46, 63);
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="myCanvas" width="500" height="500"></canvas>
+    <script>
         const myCanvas = document.getElementById("myCanvas");
         const ctx = myCanvas.getContext("2d");
         // pasto
         ctx.fillStyle = "#24ca3d";
-        ctx.fillRect(0,400,500,100)
+        ctx.fillRect(0, 400, 500, 100);
         // casa
-        ctx.lineWidth = "5"
-        ctx.strokeRect(3,270,200,130)
-        ctx.fill="black"
+        ctx.lineWidth = "5";
+        ctx.strokeRect(3, 270, 200, 130);
+        ctx.fill = "black";
 
-        ctx.fillStyle="#F2F0Eb"
-        ctx.fillRect(3,270,200,130)
-      // ventanas
-        ctx.fillStyle="yellow"
-        ctx.fillRect(120,300,50,50)
-        ctx.stroke
+        ctx.fillStyle = "#F2F0Eb";
+        ctx.fillRect(3, 270, 200, 130);
+        // ventanas
+        ctx.fillStyle = "yellow";
+        ctx.fillRect(120, 300, 50, 50);
+        ctx.stroke;
 
-        ctx.lineWidth = "2"
-        ctx.strokeRect(120,300,50,50)
-        ctx.fillStyle="yellow"
-        ctx.fillRect(25,300,50,50)
+        ctx.lineWidth = "2";
+        ctx.strokeRect(120, 300, 50, 50);
+        ctx.fillStyle = "yellow";
+        ctx.fillRect(25, 300, 50, 50);
 
-        ctx.lineWidth = "2"
-        ctx.strokeRect(25,300,50,50)
-        ctx.fill="black"
-       
+        ctx.lineWidth = "2";
+        ctx.strokeRect(25, 300, 50, 50);
+        ctx.fill = "black";
+
 
         // marcos de ventana
-        ctx.beginPath()
-        ctx.moveTo(145,300)
-        ctx.lineTo(145,350)
-        ctx.moveTo(120,325)
-        ctx.lineTo(170,325)
-        ctx.moveTo(50,300)
-        ctx.lineTo(50,350)
-        ctx.moveTo(25,325)
-        ctx.lineTo(75,325)
+        ctx.beginPath();
+        ctx.moveTo(145, 300);
+        ctx.lineTo(145, 350);
+        ctx.moveTo(120, 325);
+        ctx.lineTo(170, 325);
+        ctx.moveTo(50, 300);
+        ctx.lineTo(50, 350);
+        ctx.moveTo(25, 325);
+        ctx.lineTo(75, 325);
         ctx.closePath();
         ctx.stroke();
-        
 
+        /*Codigo Chat GPT*/
         // techo de casa
         ctx.beginPath();
-        ctx.moveTo(0,270)
-        ctx.lineTo(204,270)
-        ctx.lineTo(100,180)
-        ctx.closePath()
-         ctx.stroke();
-        // ctx.fillStyle="rgb(78, 34, 34)"
-        // ctx.fill();
+        ctx.fillStyle = "rgb(240,96,0)";
+        ctx.moveTo(0, 270);
+        ctx.lineTo(204, 270);
+        ctx.lineTo(100, 180);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
 
-        
+        // luna
         ctx.beginPath();
-        ctx.arc(460, 33, 50, 0, 2 * Math.PI);
-        
-        ctx.closePath()
-        ctx.stroke()
-       
+        ctx.arc(400, 100, 50, 0, Math.PI * 2, true); // Dibuja un círculo para la luna
+        ctx.fillStyle = "yellow"; // Color amarillo para la luna
+        ctx.fill();
+        ctx.stroke();
+
+
+        /*Codigo propio*/
+        // // techo de casa
+        // ctx.beginPath();
+        // ctx.fillStyle = " rgb(240,96,0)";
+        // ctx.moveTo(0, 270);
+        // ctx.lineTo(204, 270);
+        // ctx.lineTo(100, 180);
+        // ctx.closePath();
+        // ctx.fill()
+        // ctx.stroke();
+
+        // //luna
+        // ctx.beginPath();
+        // ctx.fillStyle = " rgb(240,96,0)";
+        // ctx.moveTo(0, 270);
+        // ctx.lineTo(204, 270);
+        // ctx.lineTo(100, 180);
+        // ctx.closePath();
+        // ctx.fill()
+        // ctx.stroke();
 
 
 
-        
-     </script>
+
+
+    </script>
 </body>
-</html>
+
+</html> -->
