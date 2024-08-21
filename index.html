@@ -22,134 +22,26 @@
         const myCanvas = document.getElementById("myCanvas");
         const ctx = myCanvas.getContext("2d");
 
+        myCanvas.addEventListener("mousedown", function (e) {
 
-        const gradient = ctx.createRadialGradient(75, 50, 5, 90, 60, 100);
-        gradient.addColorStop(0, "#3A1078");
-        gradient.addColorStop(0.5, "#4E31AA");
-        gradient.addColorStop(1, "#3795BD")
 
-        // Draw filled Rectangle
-        ctx.fillStyle = gradient;
-        ctx.fillRect(10, 10, 150, 100);
-        
+            ctx.beginPath();
+            ctx.arc(e.x, e.y, 30, 0, Math.PI * 2);
+            ctx.fillStyle = "rgba(45,99,255,0.5)";
+            ctx.fill();
 
-        // ctx.font = "80px Arial";
-        // ctx.lineWidth= 3;
-        // ctx.strokeText("Hello World!", 15, 260);
-        // ctx.fillText("Hello World!", 10, 250);
+        });
+
+        function getRandomColor() {
+            var clear = '0.5'
+            var color = 'rgba('
+            for (var i = 0; i < 3; i++) {
+                color += Math.floor(Math.random() * 255) + ','
+            }
+        }
+
 
     </script>
 </body>
 
 </html>
-
-
-<!-- <!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Canvas</title>
-    <style type="text/css">
-        body {
-            background-color: gray;
-        }
-
-        canvas {
-            background-color: rgb(0, 46, 63);
-        }
-    </style>
-</head>
-
-<body>
-    <canvas id="myCanvas" width="500" height="500"></canvas>
-    <script>
-        const myCanvas = document.getElementById("myCanvas");
-        const ctx = myCanvas.getContext("2d");
-        // pasto
-        ctx.fillStyle = "#24ca3d";
-        ctx.fillRect(0, 400, 500, 100);
-        // casa
-        ctx.lineWidth = "5";
-        ctx.strokeRect(3, 270, 200, 130);
-        ctx.fill = "black";
-
-        ctx.fillStyle = "#F2F0Eb";
-        ctx.fillRect(3, 270, 200, 130);
-        // ventanas
-        ctx.fillStyle = "yellow";
-        ctx.fillRect(120, 300, 50, 50);
-        ctx.stroke;
-
-        ctx.lineWidth = "2";
-        ctx.strokeRect(120, 300, 50, 50);
-        ctx.fillStyle = "yellow";
-        ctx.fillRect(25, 300, 50, 50);
-
-        ctx.lineWidth = "2";
-        ctx.strokeRect(25, 300, 50, 50);
-        ctx.fill = "black";
-
-
-        // marcos de ventana
-        ctx.beginPath();
-        ctx.moveTo(145, 300);
-        ctx.lineTo(145, 350);
-        ctx.moveTo(120, 325);
-        ctx.lineTo(170, 325);
-        ctx.moveTo(50, 300);
-        ctx.lineTo(50, 350);
-        ctx.moveTo(25, 325);
-        ctx.lineTo(75, 325);
-        ctx.closePath();
-        ctx.stroke();
-
-        /*Codigo Chat GPT*/
-        // techo de casa
-        ctx.beginPath();
-        ctx.fillStyle = "rgb(240,96,0)";
-        ctx.moveTo(0, 270);
-        ctx.lineTo(204, 270);
-        ctx.lineTo(100, 180);
-        ctx.closePath();
-        ctx.fill();
-        ctx.stroke();
-
-        // luna
-        ctx.beginPath();
-        ctx.arc(400, 100, 50, 0, Math.PI * 2, true); // Dibuja un círculo para la luna
-        ctx.fillStyle = "yellow"; // Color amarillo para la luna
-        ctx.fill();
-        ctx.stroke();
-
-
-        /*Codigo propio*/
-        // // techo de casa
-        // ctx.beginPath();
-        // ctx.fillStyle = " rgb(240,96,0)";
-        // ctx.moveTo(0, 270);
-        // ctx.lineTo(204, 270);
-        // ctx.lineTo(100, 180);
-        // ctx.closePath();
-        // ctx.fill()
-        // ctx.stroke();
-
-        // //luna
-        // ctx.beginPath();
-        // ctx.fillStyle = " rgb(240,96,0)";
-        // ctx.moveTo(0, 270);
-        // ctx.lineTo(204, 270);
-        // ctx.lineTo(100, 180);
-        // ctx.closePath();
-        // ctx.fill()
-        // ctx.stroke();
-
-
-
-
-
-    </script>
-</body>
-
-</html> -->
