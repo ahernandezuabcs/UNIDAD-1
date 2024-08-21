@@ -22,23 +22,29 @@
         const myCanvas = document.getElementById("myCanvas");
         const ctx = myCanvas.getContext("2d");
 
-        myCanvas.addEventListener("mousedown", function (e) {
-
-
-            ctx.beginPath();
-            ctx.arc(e.x, e.y, 30, 0, Math.PI * 2);
-            ctx.fillStyle = "rgba(45,99,255,0.5)";
-            ctx.fill();
-
-        });
-
         function getRandomColor() {
             var clear = '0.5'
             var color = 'rgba('
             for (var i = 0; i < 3; i++) {
                 color += Math.floor(Math.random() * 255) + ','
             }
+            color+=clear+')';
+            return color;
         }
+
+        document.getElementById("myCanvas").addEventListener("mouseover", function (e) {
+            // console.log(e)
+            ctx.fillStyle=getRandomColor();
+
+        })
+        document.getElementById("myCanvas").addEventListener("mousedown", function (e) {
+            console.log(e)
+
+            ctx.beginPath();
+            ctx.arc(e.x, e.y, 30, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.stroke();
+        });
 
 
     </script>
