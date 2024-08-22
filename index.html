@@ -58,16 +58,17 @@
                 ctx.fill();
                 ctx.stroke();
             }
+            myCanvas.addEventListener("mousemove", function (e) {
+                console.log(e);
+                ctx.beginPath();
+                ctx.arc(e.x, e.y, 2, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.stroke();
+            });
 
         });
 
-        myCanvas.addEventListener("mousemove", function (e) {
-            console.log(e);
-            ctx.beginPath();
-            ctx.arc(e.x, e.y, 2, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.stroke();
-        });
+
 
 
     </script>
