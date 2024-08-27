@@ -21,57 +21,87 @@
     <script>
         const myCanvas = document.getElementById("myCanvas");
         const ctx = myCanvas.getContext("2d");
-        var figura = 0;
-        function getRandomColor() {
-            var clear = '0.5'
-            var color = 'rgba('
-            for (var i = 0; i < 3; i++) {
-                color += Math.floor(Math.random() * 255) + ','
-            }
-            color += clear + ')';
-            return color;
+        var eje_x = 100;
+        var eje_y = 100;
+
+        function pintar() {
+            ctx.fillStyle="black"
+            ctx.fillRect(0, 0, myCanvas.width, myCanvas.height);
+            
+            ctx.fillStyle="green" 
+            ctx.fillRect(eje_x, eje_y, 20, 20); 
+
+             
         }
-        document.getElementById("myCanvas").addEventListener("mouseout", function (e) {
-            figura = (figura == 1) ? 2 : 1;
 
+        pintar();
 
-        })
-        document.getElementById("myCanvas").addEventListener("mouseover", function (e) {
-            // console.log(e)
-            ctx.fillStyle = getRandomColor();
-            ctx.strokeStyle = "rgb(0,0,0)"
-            ctx.lineWidth = "3"
-
-        })
-        document.getElementById("myCanvas").addEventListener("mousedown", function (e) {
-            console.log(e)
-
-            if (figura == 1) {
-                ctx.beginPath();
-                ctx.arc(e.x, e.y, 30, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.stroke();
-            } else {
-
-                ctx.beginPath();
-                ctx.fillRect(e.x, e.y, 60, 60)
-                ctx.fill();
-                ctx.stroke();
+        document.addEventListener("keypress", function (e) {
+            switch (e.keyCode) {
+                case 119:
+                    eje_y -= 10;
+                    break;
+                case 115:
+                    eje_y += 10;
+                    break;
+                case 97:
+                    eje_x -= 10;
+                    break;
+                case 100:
+                    eje_x += 10;
+                    break;
             }
-            myCanvas.addEventListener("mousemove", function (e) {
-                console.log(e);
-                ctx.beginPath();
-                ctx.arc(e.x, e.y, 2, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.stroke();
-            });
-
+            pintar();
         });
 
-
-
-
+    
     </script>
 </body>
 
 </html>
+
+// <!-- function getRandomColor() {
+//     var clear = '0.5'
+//     var color = 'rgba('
+//     for (var i = 0; i < 3; i++) {
+//         color += Math.floor(Math.random() * 255) + ','
+//     }
+//     color += clear + ')';
+//     return color;
+// }
+// document.getElementById("myCanvas").addEventListener("mouseout", function (e) {
+//     figura = (figura == 1) ? 2 : 1;
+
+
+// })
+// document.getElementById("myCanvas").addEventListener("mouseover", function (e) {
+//     // console.log(e)
+//     ctx.fillStyle = getRandomColor();
+//     ctx.strokeStyle = "rgb(0,0,0)"
+//     ctx.lineWidth = "3"
+
+// })
+// document.getElementById("myCanvas").addEventListener("mousedown", function (e) {
+//     console.log(e)
+
+//     if (figura == 1) {
+//         ctx.beginPath();
+//         ctx.arc(e.x, e.y, 30, 0, Math.PI * 2);
+//         ctx.fill();
+//         ctx.stroke();
+//     } else {
+
+//         ctx.beginPath();
+//         ctx.fillRect(e.x, e.y, 60, 60)
+//         ctx.fill();
+//         ctx.stroke();
+//     }
+//     myCanvas.addEventListener("mousemove", function (e) {
+//         console.log(e);
+//         ctx.beginPath();
+//         ctx.arc(e.x, e.y, 2, 0, Math.PI * 2);
+//         ctx.fill();
+//         ctx.stroke();
+//     });
+
+// }); -->
