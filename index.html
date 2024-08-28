@@ -23,102 +23,74 @@
         const ctx = myCanvas.getContext("2d");
         var eje_x = 100;
         var eje_y = 100;
+        var dir = "derecha";
 
-        function pintar() {
-            ctx.fillStyle="black"
-            ctx.fillRect(0, 0, myCanvas.width, myCanvas.height);
-            
-            ctx.fillStyle="green" 
-            ctx.fillRect(eje_x, eje_y, 20, 20); 
 
-             
-        }
-
-        pintar();
-        widthYHeight();
         document.addEventListener("keypress", function (e) {
+            console.log(1)
             switch (e.keyCode) {
                 case 119:
+                    dir = "arriba"
+                    
+                    break;
+                case 115:
+                    dir = "abajo"
+                    break;
+                case 97:
+                    dir = "izquierda"
+                    break;
+                case 100:
+                    dir = "derecha"
+                    break;
+            }
+
+        });
+
+        function actualizar() {
+            console.log(2)
+            switch (dir) {
+                case "arriba":
                     eje_y -= 10;
-                    if(eje_y <= 0){
+                    if (eje_y <= 0) {
                         eje_y = 500
                     }
                     break;
-                case 115:
+                case "abajo":
                     eje_y += 10;
-                    if(eje_y >= 500){
+                    if (eje_y >= 500) {
                         eje_y = 0
                     }
                     break;
-                case 97:
+                case "izquierda":
                     eje_x -= 10;
-                    if(eje_x <= 0){
+                    if (eje_x <= 0) {
                         eje_x = 500
                     }
                     break;
-                case 100:
+                case "derecha":
                     eje_x += 10;
-                    if(eje_x >= 500){
+                    if (eje_x >= 500) {
                         eje_x = 0
                     }
                     break;
             }
-            pintar();
-        });
-
-        function widthYHeight(){
-            console.log(myCanvas.width)
-            console.log(myCanvas.height)
 
         }
-    
+
+        function pintar() {
+            console.log(3)
+            ctx.fillStyle = "white"
+            ctx.fillRect(0, 0, myCanvas.width, myCanvas.height);
+
+            ctx.fillStyle = "green"
+            ctx.fillRect(eje_x, eje_y, 20, 20);
+            actualizar()
+            requestAnimationFrame(pintar)
+        }
+
+        requestAnimationFrame(pintar)
+
     </script>
 </body>
 
 </html>
-
-// <!-- function getRandomColor() {
-//     var clear = '0.5'
-//     var color = 'rgba('
-//     for (var i = 0; i < 3; i++) {
-//         color += Math.floor(Math.random() * 255) + ','
-//     }
-//     color += clear + ')';
-//     return color;
-// }
-// document.getElementById("myCanvas").addEventListener("mouseout", function (e) {
-//     figura = (figura == 1) ? 2 : 1;
-
-
-// })
-// document.getElementById("myCanvas").addEventListener("mouseover", function (e) {
-//     // console.log(e)
-//     ctx.fillStyle = getRandomColor();
-//     ctx.strokeStyle = "rgb(0,0,0)"
-//     ctx.lineWidth = "3"
-
-// })
-// document.getElementById("myCanvas").addEventListener("mousedown", function (e) {
-//     console.log(e)
-
-//     if (figura == 1) {
-//         ctx.beginPath();
-//         ctx.arc(e.x, e.y, 30, 0, Math.PI * 2);
-//         ctx.fill();
-//         ctx.stroke();
-//     } else {
-
-//         ctx.beginPath();
-//         ctx.fillRect(e.x, e.y, 60, 60)
-//         ctx.fill();
-//         ctx.stroke();
-//     }
-//     myCanvas.addEventListener("mousemove", function (e) {
-//         console.log(e);
-//         ctx.beginPath();
-//         ctx.arc(e.x, e.y, 2, 0, Math.PI * 2);
-//         ctx.fill();
-//         ctx.stroke();
-//     });
-
-// }); -->
