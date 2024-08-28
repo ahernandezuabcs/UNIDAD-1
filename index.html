@@ -24,72 +24,71 @@
         var eje_x = 100;
         var eje_y = 100;
         var dir = "derecha";
-
+        var vel = 5;  
 
         document.addEventListener("keypress", function (e) {
-            console.log(1)
             switch (e.keyCode) {
-                case 119:
-                    dir = "arriba"
-                    
+                case 119:  
+                    dir = "arriba";
                     break;
-                case 115:
-                    dir = "abajo"
+                case 115:  
+                    dir = "abajo";
                     break;
-                case 97:
-                    dir = "izquierda"
+                case 97:  
+                    dir = "izquierda";
                     break;
-                case 100:
-                    dir = "derecha"
+                case 100:  
+                    dir = "derecha";
+                    break;
+                case 32:  
+                    vel += 2.5;  
                     break;
             }
-
         });
 
         function actualizar() {
-            console.log(2)
             switch (dir) {
                 case "arriba":
-                    eje_y -= 10;
-                    if (eje_y <= 0) {
-                        eje_y = 500
+                    eje_y -= vel;  
+                    if (eje_y < 0) {
+                        eje_y = 500;
                     }
                     break;
                 case "abajo":
-                    eje_y += 10;
-                    if (eje_y >= 500) {
-                        eje_y = 0
+                    eje_y += vel;  
+                    if (eje_y > 500) {
+                        eje_y = 0;
                     }
                     break;
                 case "izquierda":
-                    eje_x -= 10;
-                    if (eje_x <= 0) {
-                        eje_x = 500
+                    eje_x -= vel;  
+                    if (eje_x < 0) {
+                        eje_x = 500;
                     }
                     break;
                 case "derecha":
-                    eje_x += 10;
-                    if (eje_x >= 500) {
-                        eje_x = 0
+                    eje_x += vel;  
+                    if (eje_x > 500) {
+                        eje_x = 0;
                     }
                     break;
             }
-
         }
 
         function pintar() {
-            console.log(3)
-            ctx.fillStyle = "white"
+            ctx.fillStyle = "white";
             ctx.fillRect(0, 0, myCanvas.width, myCanvas.height);
+            ctx.fillStyle = "black";
+            ctx.fillText("Velocidad: " + vel, 10, 490);
 
-            ctx.fillStyle = "green"
+            ctx.fillStyle = "green";
             ctx.fillRect(eje_x, eje_y, 20, 20);
-            actualizar()
-            requestAnimationFrame(pintar)
+
+            actualizar();
+            requestAnimationFrame(pintar);  
         }
 
-        requestAnimationFrame(pintar)
-
+        requestAnimationFrame(pintar);  
     </script>
 </body>
 
