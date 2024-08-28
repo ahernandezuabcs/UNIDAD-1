@@ -35,25 +35,42 @@
         }
 
         pintar();
-
+        widthYHeight();
         document.addEventListener("keypress", function (e) {
             switch (e.keyCode) {
                 case 119:
                     eje_y -= 10;
+                    if(eje_y <= 0){
+                        eje_y = 500
+                    }
                     break;
                 case 115:
                     eje_y += 10;
+                    if(eje_y >= 500){
+                        eje_y = 0
+                    }
                     break;
                 case 97:
                     eje_x -= 10;
+                    if(eje_x <= 0){
+                        eje_x = 500
+                    }
                     break;
                 case 100:
                     eje_x += 10;
+                    if(eje_x >= 500){
+                        eje_x = 0
+                    }
                     break;
             }
             pintar();
         });
 
+        function widthYHeight(){
+            console.log(myCanvas.width)
+            console.log(myCanvas.height)
+
+        }
     
     </script>
 </body>
