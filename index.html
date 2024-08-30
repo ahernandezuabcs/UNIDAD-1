@@ -11,84 +11,98 @@
         }
 
         canvas {
-            background-color: white;
+            background-color: black;
+            background-image: radial-gradient(at top right, rgba(255, 255, 255, 0.2), rgb(19, 22, 110));
         }
     </style>
 </head>
 
 <body>
-    <canvas id="myCanvas" width="500" height="500"></canvas>
+    <canvas id="myCanvas" width="800" height="500"></canvas>
     <script>
         const myCanvas = document.getElementById("myCanvas");
         const ctx = myCanvas.getContext("2d");
-        var eje_x = 100;
-        var eje_y = 100;
-        var dir = "derecha";
-        var vel = 5;  
+        //pasto
+        ctx.fillStyle = "#24ca3d";
+        ctx.fillRect(0, 400, 800, 100);
+//casa
+        ctx.lineWidth = "5";
+        ctx.strokeRect(3, 270, 200, 130);
 
-        document.addEventListener("keypress", function (e) {
-            switch (e.keyCode) {
-                case 119:  
-                    dir = "arriba";
-                    break;
-                case 115:  
-                    dir = "abajo";
-                    break;
-                case 97:  
-                    dir = "izquierda";
-                    break;
-                case 100:  
-                    dir = "derecha";
-                    break;
-                case 32:  
-                    vel += 2.5;  
-                    break;
-            }
-        });
+        ctx.fillStyle = "#F2F0Eb";
+        ctx.fillRect(3, 270, 200, 130);
+//ventanas
+        ctx.fillStyle = "yellow";
+        ctx.fillRect(120, 300, 50, 50);
+        ctx.lineWidth = "2";
+        ctx.strokeRect(120, 300, 50, 50);
 
-        function actualizar() {
-            switch (dir) {
-                case "arriba":
-                    eje_y -= vel;  
-                    if (eje_y < 0) {
-                        eje_y = 500;
-                    }
-                    break;
-                case "abajo":
-                    eje_y += vel;  
-                    if (eje_y > 500) {
-                        eje_y = 0;
-                    }
-                    break;
-                case "izquierda":
-                    eje_x -= vel;  
-                    if (eje_x < 0) {
-                        eje_x = 500;
-                    }
-                    break;
-                case "derecha":
-                    eje_x += vel;  
-                    if (eje_x > 500) {
-                        eje_x = 0;
-                    }
-                    break;
-            }
-        }
+        ctx.fillRect(25, 300, 50, 50);
+        ctx.strokeRect(25, 300, 50, 50);
+//marcos de ventasnas
+        ctx.beginPath();
+        ctx.moveTo(145, 300);
+        ctx.lineTo(145, 350);
+        ctx.moveTo(120, 325);
+        ctx.lineTo(170, 325);
+        ctx.moveTo(50, 300);
+        ctx.lineTo(50, 350);
+        ctx.moveTo(25, 325);
+        ctx.lineTo(75, 325);
+        ctx.stroke();
+//techo de casa
+        ctx.beginPath();
+        ctx.fillStyle = "rgb(240,96,0)";
+        ctx.moveTo(0, 270);
+        ctx.lineTo(204, 270);
+        ctx.lineTo(100, 180);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+//luna
+        ctx.beginPath();
+        ctx.arc(724, 45, 50, 0, Math.PI * 2, true);
+        ctx.fillStyle = "rgba(255,255,255,0.7)";
+        ctx.fill();
+//peca de la luna
+        ctx.beginPath();
+        ctx.arc(713, 57, 10, 0, Math.PI * 2);
+        ctx.fillStyle = "rgba(154,154,154,0.3)";
+        ctx.fill();
+//lago
+        ctx.beginPath();
+        ctx.ellipse(650, 450, 100, 40, 0, 0, Math.PI * 2);
+        ctx.fillStyle = "rgba(0, 119, 190, 0.7)";
+        ctx.fill();
+        ctx.stroke();
+//puerta
+        ctx.fillStyle = "#8B4513";
+        ctx.fillRect(85, 350, 50, 50);
+        ctx.lineWidth = "3";
+        ctx.strokeRect(85, 350, 50, 50);
 
-        function pintar() {
+        ctx.beginPath();
+        ctx.arc(125, 375, 5, 0, Math.PI * 2, true);
+        ctx.fillStyle = "gold";
+        ctx.fill();
+//estrellas
+        function pintarEstrellas(ctx, x, y, r) {
+            ctx.beginPath();
+            ctx.arc(x, y, r, 0, Math.PI * 2, true);
             ctx.fillStyle = "white";
-            ctx.fillRect(0, 0, myCanvas.width, myCanvas.height);
-            ctx.fillStyle = "black";
-            ctx.fillText("Velocidad: " + vel, 10, 490);
-
-            ctx.fillStyle = "green";
-            ctx.fillRect(eje_x, eje_y, 20, 20);
-
-            actualizar();
-            requestAnimationFrame(pintar);  
+            ctx.fill();
         }
 
-        requestAnimationFrame(pintar);  
+        for (let i = 0; i < 50; i++) {
+            let x = Math.random() * myCanvas.width;
+            let y = Math.random() * 200; // Limita las estrellas a la parte superior del canvas
+            let r = Math.random() * 2; // Radio pequeño para que las estrellas sean puntos
+            pintarEstrellas(ctx, x, y, r);
+        }
+        //sacar coordenadas
+        document.getElementById("myCanvas").addEventListener("click", function (e) {
+            console.log(e.clientX, e.clientY);
+        });
     </script>
 </body>
 
