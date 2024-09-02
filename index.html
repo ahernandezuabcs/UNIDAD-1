@@ -12,51 +12,40 @@
 
         canvas {
             background-color: rgb(162, 240, 255);
-            /* Color del cielo */
         }
     </style>
 </head>
 
 <body>
-    <canvas id="myCanvas" width="800" height="500"></canvas>
+    <canvas id="myCanvas" width="500" height="800"></canvas>
     <script>
         const myCanvas = document.getElementById("myCanvas");
         const ctx = myCanvas.getContext("2d");
 
         function drawRect(axisX, axisY, sizeX, sizeY, fillColor) {
-            ctx.lineWidth = 5;
+            ctx.lineWidth = 0;
             ctx.fillStyle = fillColor;
             ctx.fillRect(axisX, axisY, sizeX, sizeY);
-            ctx.strokeRect(axisX, axisY, sizeX, sizeY);
         }
 
         function drawGround() {
             const groundHeight = 100;
             const canvasHeight = myCanvas.height;
             const canvasWidth = myCanvas.width;
-
             drawRect(0, canvasHeight - groundHeight, canvasWidth, groundHeight, "rgb(101, 67, 33)");
         }
 
         function drawRectRound(axisX, axisY, width, height, radius, fillColor) {
             ctx.beginPath();
-
             ctx.moveTo(axisX + radius, axisY);
             ctx.lineTo(axisX + width - radius, axisY);
             ctx.quadraticCurveTo(axisX + width, axisY, axisX + width, axisY + radius);
-
-
             ctx.lineTo(axisX + width, axisY + height - radius);
             ctx.quadraticCurveTo(axisX + width, axisY + height, axisX + width - radius, axisY + height);
-
-
             ctx.lineTo(axisX + radius, axisY + height);
             ctx.quadraticCurveTo(axisX, axisY + height, axisX, axisY + height - radius);
-
-
             ctx.lineTo(axisX, axisY + radius);
             ctx.quadraticCurveTo(axisX, axisY, axisX + radius, axisY);
-
             ctx.closePath();
             ctx.fillStyle = fillColor;
             ctx.fill();
@@ -66,49 +55,47 @@
 
         function drawBush(axisX, axisY, radius, fillColor) {
             ctx.fillStyle = fillColor;
-
             ctx.beginPath();
             ctx.arc(axisX, axisY, radius, 0, 2 * Math.PI);
             ctx.fill();
-            
-
         }
 
+        ctx.beginPath();
+        ctx.lineWidth = 5;
+        ctx.moveTo(230, 200);
+        ctx.lineTo(200, 160);
+        ctx.lineTo(172, 200);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
 
-        // const grd = ctx.createLinearGradient(0, 0, 200, 0);
-        // grd.addColorStop(0, "rgb(0,229,85)");
-        // grd.addColorStop(0.5, "rgb(0,13(9,0)")
-        // grd.addColorStop(1, "rgb(0,0,0)");
-        // ctx.fillStyle = grd
-        // ctx.fillRect(500, 300, 100, 200)
+        drawRectRound(145, 308, 130, 150, 20, "rgb(246,201,91)");
 
+        var img1 = new Image();
+        img1.src = 'banderines sector.png';
 
-        
+        img1.onload = function () {
+            ctx.drawImage(img1, 160, 320, 100, 130);
+        };
 
-        drawBush(60,370,30,"rgb(0,212,99)")
-        drawBush(40,390,30,"rgb(0,212,99)")
-        drawBush(90,390,30,"rgb(0,212,99)")
-        drawRect(200, 50, 50, 50, "rgb(254, 145, 100)");
-        drawRect(250, 50, 50, 50, "rgb(254, 145, 100)");
-        drawRect(700, 130, 50, 50, "rgb(254, 145, 100)");
-        drawRect(50, 130, 50, 50, "rgb(254, 145, 100)");
+        drawBush(205, 250, 60, "rgb(228,185,142)");
+        drawBush(180, 240, 12, "rgb(0,0,0)");
+        drawBush(230, 240, 12, "rgb(0,0,0)");
 
+        drawRect(145, 450, 130, 50, "rgb(31,49,142)");
+        drawRect(145, 500, 50, 100, "rgb(31,49,142)");
+        drawRect(225, 500, 50, 100, "rgb(31,49,142)");
+        drawRect(145, 600, 55, 25, "rgb(0,0,0)");
+        drawRect(225, 600, 55, 25, "rgb(0,0,0)");
 
+       
 
-        drawRectRound(650, 250, 150, 150, 5, "rgb(0,221,91)")
-        drawRectRound(270, 200, 150, 200, 5, "rgb(0,0,0)")
-        drawRectRound(260, 180, 150, 220, 5, "rgb(113,194,255)")
-        drawRectRound(190, 300, 150, 100, 5, "rgb(0,0,0)")
-        drawRectRound(180, 280, 150, 120, 5, "rgb(255,192,181)")
+        // drawRect(105, 330, 40, 100, "rgb(246,201,91)");
+        // drawRect(260, 400, 40, 100, "rgb(246,201,91)");
 
-        drawRect(500, 300, 50, 100, "rgb(0,139,0)")
-        drawRect(490, 300, 70, 30, "rgb(0,139,0)")
-        drawGround();
-
-
-        document.getElementById(addEventListener("click", function (e) {
-            console.log(e.clientX, e.clientY)
-        }))
+        myCanvas.addEventListener("click", function (e) {
+            console.log(e.clientX, e.clientY);
+        });
     </script>
 </body>
 
