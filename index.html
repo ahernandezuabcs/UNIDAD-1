@@ -11,84 +11,104 @@
         }
 
         canvas {
-            background-color: white;
+            background-color: rgb(162, 240, 255);
+            /* Color del cielo */
         }
     </style>
 </head>
 
 <body>
-    <canvas id="myCanvas" width="500" height="500"></canvas>
+    <canvas id="myCanvas" width="800" height="500"></canvas>
     <script>
         const myCanvas = document.getElementById("myCanvas");
         const ctx = myCanvas.getContext("2d");
-        var eje_x = 100;
-        var eje_y = 100;
-        var dir = "derecha";
-        var vel = 5;  
 
-        document.addEventListener("keypress", function (e) {
-            switch (e.keyCode) {
-                case 119:  
-                    dir = "arriba";
-                    break;
-                case 115:  
-                    dir = "abajo";
-                    break;
-                case 97:  
-                    dir = "izquierda";
-                    break;
-                case 100:  
-                    dir = "derecha";
-                    break;
-                case 32:  
-                    vel += 2.5;  
-                    break;
-            }
-        });
-
-        function actualizar() {
-            switch (dir) {
-                case "arriba":
-                    eje_y -= vel;  
-                    if (eje_y < 0) {
-                        eje_y = 500;
-                    }
-                    break;
-                case "abajo":
-                    eje_y += vel;  
-                    if (eje_y > 500) {
-                        eje_y = 0;
-                    }
-                    break;
-                case "izquierda":
-                    eje_x -= vel;  
-                    if (eje_x < 0) {
-                        eje_x = 500;
-                    }
-                    break;
-                case "derecha":
-                    eje_x += vel;  
-                    if (eje_x > 500) {
-                        eje_x = 0;
-                    }
-                    break;
-            }
+        function drawRect(axisX, axisY, sizeX, sizeY, fillColor) {
+            ctx.lineWidth = 5;
+            ctx.fillStyle = fillColor;
+            ctx.fillRect(axisX, axisY, sizeX, sizeY);
+            ctx.strokeRect(axisX, axisY, sizeX, sizeY);
         }
 
-        function pintar() {
-            ctx.fillStyle = "white";
-            ctx.fillRect(0, 0, myCanvas.width, myCanvas.height);
-            ctx.fillStyle = "black";
-            ctx.fillText("Velocidad: " + vel, 10, 490);
+        function drawGround() {
+            const groundHeight = 100;
+            const canvasHeight = myCanvas.height;
+            const canvasWidth = myCanvas.width;
 
-            ctx.fillStyle = "green";
-            ctx.fillRect(eje_x, eje_y, 20, 20);
-
-            actualizar();
-            requestAnimationFrame(pintar);  
+            drawRect(0, canvasHeight - groundHeight, canvasWidth, groundHeight, "rgb(101, 67, 33)");
         }
 
-        requestAnimationFrame(pintar);  
+        function drawRectRound(axisX, axisY, width, height, radius, fillColor) {
+            ctx.beginPath();
+
+            ctx.moveTo(axisX + radius, axisY);
+            ctx.lineTo(axisX + width - radius, axisY);
+            ctx.quadraticCurveTo(axisX + width, axisY, axisX + width, axisY + radius);
+
+
+            ctx.lineTo(axisX + width, axisY + height - radius);
+            ctx.quadraticCurveTo(axisX + width, axisY + height, axisX + width - radius, axisY + height);
+
+
+            ctx.lineTo(axisX + radius, axisY + height);
+            ctx.quadraticCurveTo(axisX, axisY + height, axisX, axisY + height - radius);
+
+
+            ctx.lineTo(axisX, axisY + radius);
+            ctx.quadraticCurveTo(axisX, axisY, axisX + radius, axisY);
+
+            ctx.closePath();
+            ctx.fillStyle = fillColor;
+            ctx.fill();
+            ctx.strokeStyle = 'black';
+            ctx.stroke();
+        }
+
+        function drawBush(axisX, axisY, radius, fillColor) {
+            ctx.fillStyle = fillColor;
+
+            ctx.beginPath();
+            ctx.arc(axisX, axisY, radius, 0, 2 * Math.PI);
+            ctx.fill();
+            
+
+        }
+
+
+        // const grd = ctx.createLinearGradient(0, 0, 200, 0);
+        // grd.addColorStop(0, "rgb(0,229,85)");
+        // grd.addColorStop(0.5, "rgb(0,13(9,0)")
+        // grd.addColorStop(1, "rgb(0,0,0)");
+        // ctx.fillStyle = grd
+        // ctx.fillRect(500, 300, 100, 200)
+
+
+        
+
+        drawBush(60,370,30,"rgb(0,212,99)")
+        drawBush(40,390,30,"rgb(0,212,99)")
+        drawBush(90,390,30,"rgb(0,212,99)")
+        drawRect(200, 50, 50, 50, "rgb(254, 145, 100)");
+        drawRect(250, 50, 50, 50, "rgb(254, 145, 100)");
+        drawRect(700, 130, 50, 50, "rgb(254, 145, 100)");
+        drawRect(50, 130, 50, 50, "rgb(254, 145, 100)");
+
+
+
+        drawRectRound(650, 250, 150, 150, 5, "rgb(0,221,91)")
+        drawRectRound(270, 200, 150, 200, 5, "rgb(0,0,0)")
+        drawRectRound(260, 180, 150, 220, 5, "rgb(113,194,255)")
+        drawRectRound(190, 300, 150, 100, 5, "rgb(0,0,0)")
+        drawRectRound(180, 280, 150, 120, 5, "rgb(255,192,181)")
+
+        drawRect(500, 300, 50, 100, "rgb(0,139,0)")
+        drawRect(490, 300, 70, 30, "rgb(0,139,0)")
+        drawGround();
+
+
+        document.getElementById(addEventListener("click", function (e) {
+            console.log(e.clientX, e.clientY)
+        }))
     </script>
 </body>
 
