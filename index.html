@@ -11,91 +11,130 @@
         }
 
         canvas {
-            background-color: rgb(162, 240, 255);
+            background-color: white;
         }
     </style>
 </head>
 
 <body>
-    <canvas id="myCanvas" width="500" height="800"></canvas>
+    <canvas id="myCanvas" width="500" height="500"></canvas>
     <script>
         const myCanvas = document.getElementById("myCanvas");
         const ctx = myCanvas.getContext("2d");
+        var dir = "";
+        var vel = 5;
 
-        function drawRect(axisX, axisY, sizeX, sizeY, fillColor) {
-            ctx.lineWidth = 0;
-            ctx.fillStyle = fillColor;
-            ctx.fillRect(axisX, axisY, sizeX, sizeY);
+        class Rectangulo {
+            constructor(axisX, axisY, width, height, fillColor, vel) {
+                this.axisX = axisX;
+                this.axisY = axisY;
+                this.width = width;
+                this.height = height;
+                this.fillColor = fillColor;
+                this.vel = vel;
+            }
+
+            deteccionColision(target) {
+                if (this.axisX < target.axisX + target.width &&
+                    this.axisX + this.width > target.axisX &&
+                    this.axisY < target.axisY + target.height &&
+                    this.axisY + this.height > target.axisY) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
         }
 
-        function drawGround() {
-            const groundHeight = 100;
-            const canvasHeight = myCanvas.height;
-            const canvasWidth = myCanvas.width;
-            drawRect(0, canvasHeight - groundHeight, canvasWidth, groundHeight, "rgb(101, 67, 33)");
-        }
+        var jugador = new Rectangulo(100, 100, 20, 20, "green", 5);
+        var target = new Rectangulo(300, 300, 10, 10, "red", null);
+        var muro = new Rectangulo(150, 400, 200, 20, "black", null); 
 
-        function drawRectRound(axisX, axisY, width, height, radius, fillColor) {
-            ctx.beginPath();
-            ctx.moveTo(axisX + radius, axisY);
-            ctx.lineTo(axisX + width - radius, axisY);
-            ctx.quadraticCurveTo(axisX + width, axisY, axisX + width, axisY + radius);
-            ctx.lineTo(axisX + width, axisY + height - radius);
-            ctx.quadraticCurveTo(axisX + width, axisY + height, axisX + width - radius, axisY + height);
-            ctx.lineTo(axisX + radius, axisY + height);
-            ctx.quadraticCurveTo(axisX, axisY + height, axisX, axisY + height - radius);
-            ctx.lineTo(axisX, axisY + radius);
-            ctx.quadraticCurveTo(axisX, axisY, axisX + radius, axisY);
-            ctx.closePath();
-            ctx.fillStyle = fillColor;
-            ctx.fill();
-            ctx.strokeStyle = 'black';
-            ctx.stroke();
-        }
-
-        function drawBush(axisX, axisY, radius, fillColor) {
-            ctx.fillStyle = fillColor;
-            ctx.beginPath();
-            ctx.arc(axisX, axisY, radius, 0, 2 * Math.PI);
-            ctx.fill();
-        }
-
-        ctx.beginPath();
-        ctx.lineWidth = 5;
-        ctx.moveTo(230, 200);
-        ctx.lineTo(200, 160);
-        ctx.lineTo(172, 200);
-        ctx.closePath();
-        ctx.fill();
-        ctx.stroke();
-
-        drawRectRound(145, 308, 130, 150, 20, "rgb(246,201,91)");
-
-        var img1 = new Image();
-        img1.src = 'banderines sector.png';
-
-        img1.onload = function () {
-            ctx.drawImage(img1, 160, 320, 100, 130);
-        };
-
-        drawBush(205, 250, 60, "rgb(228,185,142)");
-        drawBush(180, 240, 12, "rgb(0,0,0)");
-        drawBush(230, 240, 12, "rgb(0,0,0)");
-
-        drawRect(145, 450, 130, 50, "rgb(31,49,142)");
-        drawRect(145, 500, 50, 100, "rgb(31,49,142)");
-        drawRect(225, 500, 50, 100, "rgb(31,49,142)");
-        drawRect(145, 600, 55, 25, "rgb(0,0,0)");
-        drawRect(225, 600, 55, 25, "rgb(0,0,0)");
-
-       
-
-        // drawRect(105, 330, 40, 100, "rgb(246,201,91)");
-        // drawRect(260, 400, 40, 100, "rgb(246,201,91)");
-
-        myCanvas.addEventListener("click", function (e) {
-            console.log(e.clientX, e.clientY);
+        document.addEventListener("keypress", function (e) {
+            switch (e.keyCode) {
+                case 119: // 'w'
+                    dir = "arriba";
+                    break;
+                case 115: // 's'
+                    dir = "abajo";
+                    break;
+                case 97: // 'a'
+                    dir = "izquierda";
+                    break;
+                case 100: // 'd'
+                    dir = "derecha";
+                    break;
+                case 32: // 'space'
+                    jugador.vel += 2.5;
+                    break;
+            }
         });
+
+        function actualizar() {
+            let nuevoX = jugador.axisX;
+            let nuevoY = jugador.axisY;
+
+            switch (dir) {
+                case "arriba":
+                    nuevoY -= jugador.vel;
+                    break;
+                case "abajo":
+                    nuevoY += jugador.vel;
+                    break;
+                case "izquierda":
+                    nuevoX -= jugador.vel;
+                    break;
+                case "derecha":
+                    nuevoX += jugador.vel;
+                    break;
+            }
+
+            if (!jugador.deteccionColision(muro)) {
+                jugador.axisX = nuevoX;
+                jugador.axisY = nuevoY;
+            }
+            
+            if (jugador.axisX < 0) {
+                jugador.axisX = 500;
+            } else if (jugador.axisX > 500) {
+                jugador.axisX = 0;
+            }
+
+            if (jugador.axisY < 0) {
+                jugador.axisY = 500;
+            } else if (jugador.axisY > 500) {
+                jugador.axisY = 0;
+            }
+        }
+
+        function moverTarget() {
+            target.axisX = Math.random() * (myCanvas.width - target.width);
+            target.axisY = Math.random() * (myCanvas.height - target.height);
+        }
+
+        function pintar() {
+            ctx.fillStyle = "white";
+            ctx.fillRect(0, 0, myCanvas.width, myCanvas.height);
+            ctx.fillStyle = "black";
+            ctx.fillText("Velocidad: " + jugador.vel, 10, 490);
+
+            ctx.fillStyle = jugador.fillColor;
+            ctx.fillRect(jugador.axisX, jugador.axisY, jugador.width, jugador.height);
+            ctx.fillStyle = target.fillColor;
+            ctx.fillRect(target.axisX, target.axisY, target.width, target.height);
+
+            ctx.fillStyle = muro.fillColor;
+            ctx.fillRect(muro.axisX, muro.axisY, muro.width, muro.height);
+
+            if (jugador.deteccionColision(target)) {
+                moverTarget();
+            }
+
+            actualizar();
+            requestAnimationFrame(pintar);
+        }
+
+        requestAnimationFrame(pintar);
     </script>
 </body>
 
