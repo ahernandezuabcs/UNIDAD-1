@@ -34,11 +34,11 @@
                 this.vel = vel;
             }
 
-            deteccionColision(target) {
-                if (this.axisX < target.axisX + target.width &&
-                    this.axisX + this.width > target.axisX &&
-                    this.axisY < target.axisY + target.height &&
-                    this.axisY + this.height > target.axisY) {
+            deteccionColision(otro) {
+                if (this.axisX < otro.axisX + otro.width &&
+                    this.axisX + this.width > otro.axisX &&
+                    this.axisY < otro.axisY + otro.height &&
+                    this.axisY + this.height > otro.axisY) {
                     return true;
                 } else {
                     return false;
@@ -48,7 +48,7 @@
 
         var jugador = new Rectangulo(100, 100, 20, 20, "green", 5);
         var target = new Rectangulo(300, 300, 10, 10, "red", null);
-        var muro = new Rectangulo(150, 400, 200, 20, "black", null); 
+        var muro = new Rectangulo(150, 400, 200, 20, "black", null);
 
         document.addEventListener("keypress", function (e) {
             switch (e.keyCode) {
@@ -71,39 +71,48 @@
         });
 
         function actualizar() {
-            let nuevoX = jugador.axisX;
-            let nuevoY = jugador.axisY;
-
             switch (dir) {
-                case "arriba":
-                    nuevoY -= jugador.vel;
+                case 'arriba':
+                    jugador.axisY -= vel;
+                    if (jugador.axisY <= 10) {
+                        jugador.axisY = 480;
+                    }
                     break;
-                case "abajo":
-                    nuevoY += jugador.vel;
+                case 'abajo':
+                    jugador.axisY += vel;
+                    if (jugador.axisY > 500) {
+                        jugador.axisY = 0;
+                    }
                     break;
-                case "izquierda":
-                    nuevoX -= jugador.vel;
+                case 'derecha':
+                    jugador.axisX += vel;
+                    if (jugador.axisX > 500) {
+                        jugador.axisX = 0;
+                    }
                     break;
-                case "derecha":
-                    nuevoX += jugador.vel;
+                case 'izquierda':
+                    jugador.axisX -= vel;
+                    if (jugador.axisX <= 10) {
+                        jugador.axisX = 480;
+                    }
                     break;
             }
 
-            if (!jugador.deteccionColision(muro)) {
-                jugador.axisX = nuevoX;
-                jugador.axisY = nuevoY;
-            }
-            
-            if (jugador.axisX < 0) {
-                jugador.axisX = 500;
-            } else if (jugador.axisX > 500) {
-                jugador.axisX = 0;
-            }
-
-            if (jugador.axisY < 0) {
-                jugador.axisY = 500;
-            } else if (jugador.axisY > 500) {
-                jugador.axisY = 0;
+            if (jugador.deteccionColision(muro)) {
+                switch (dir) {
+                    case 'arriba':
+                        jugador.axisY += vel;
+                        break;
+                    case 'abajo':
+                        jugador.axisY -= vel;
+                        break;
+                    case 'derecha':
+                        jugador.axisX -= vel;
+                        break;
+                    case 'izquierda':
+                        jugador.axisX += vel;
+                        break;
+                }
             }
         }
 
