@@ -23,6 +23,7 @@
         const ctx = myCanvas.getContext("2d");
         var dir = "";
         var vel = 5;
+        var muros = []
 
         class Rectangulo {
             constructor(axisX, axisY, width, height, fillColor, vel) {
@@ -48,23 +49,25 @@
 
         var jugador = new Rectangulo(100, 100, 20, 20, "green", 5);
         var target = new Rectangulo(300, 300, 10, 10, "red", null);
-        var muro = new Rectangulo(150, 400, 200, 20, "black", null);
+        muros.push(new Rectangulo(150, 400, 200, 20, "black", null));
+        muros.push(new Rectangulo(50, 200, 100, 20, "black", null));
+        muros.push(new Rectangulo(300, 100, 150, 20, "black", null));
 
         document.addEventListener("keypress", function (e) {
             switch (e.keyCode) {
-                case 119: // 'w'
+                case 119: 
                     dir = "arriba";
                     break;
-                case 115: // 's'
+                case 115: 
                     dir = "abajo";
                     break;
-                case 97: // 'a'
+                case 97: 
                     dir = "izquierda";
                     break;
-                case 100: // 'd'
+                case 100: 
                     dir = "derecha";
                     break;
-                case 32: // 'space'
+                case 32: 
                     jugador.vel += 2.5;
                     break;
             }
@@ -98,7 +101,8 @@
                     break;
             }
 
-            if (jugador.deteccionColision(muro)) {
+            muros.forEach(function(muro, i,array){
+                if (jugador.deteccionColision(muro)) {
                 switch (dir) {
                     case 'arriba':
                         jugador.axisY += vel;
@@ -114,6 +118,8 @@
                         break;
                 }
             }
+            })
+            
         }
 
         function moverTarget() {
@@ -132,8 +138,13 @@
             ctx.fillStyle = target.fillColor;
             ctx.fillRect(target.axisX, target.axisY, target.width, target.height);
 
-            ctx.fillStyle = muro.fillColor;
-            ctx.fillRect(muro.axisX, muro.axisY, muro.width, muro.height);
+            // ctx.fillStyle = muro.fillColor;
+
+            muros.forEach(function(muro, i,array){
+                ctx.fillRect(muro.axisX, muro.axisY, muro.width, muro.height);
+            })
+
+            
 
             if (jugador.deteccionColision(target)) {
                 moverTarget();
