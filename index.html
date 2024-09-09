@@ -1,29 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Canvas</title>
     <style type="text/css">
         body {
             background-color: gray;
         }
-
         canvas {
             background-color: white;
         }
     </style>
 </head>
-
 <body>
-    <canvas id="myCanvas" width="500" height="500"></canvas>
-    <script>
+
+    <canvas id="myCanvas" width="600" height="500"></canvas>
+    <audio id="collisionSound" src="correcaminos-bip-bip-.mp3"></audio> <!-- Agregar tu archivo de sonido -->
+    
+    <script type="text/javascript">
         const myCanvas = document.getElementById("myCanvas");
         const ctx = myCanvas.getContext("2d");
-        var dir = "";
-        var vel = 5;
-        var muros = []
+        const sound = document.getElementById("collisionSound");
+
+        let isPaused = false; // Variable de pausa
+        let score = 0; // Variable para el puntaje
+        let img = new Image();
+        img.src = "goku.png"; // Ruta de tu imagen
 
         class Rectangulo {
             constructor(axisX, axisY, width, height, fillColor, vel) {
@@ -36,126 +39,137 @@
             }
 
             deteccionColision(otro) {
-                if (this.axisX < otro.axisX + otro.width &&
-                    this.axisX + this.width > otro.axisX &&
-                    this.axisY < otro.axisY + otro.height &&
-                    this.axisY + this.height > otro.axisY) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return (this.axisX < otro.axisX + otro.width &&
+                        this.axisX + this.width > otro.axisX &&
+                        this.axisY < otro.axisY + otro.height &&
+                        this.axisY + this.height > otro.axisY);
             }
         }
 
-        var jugador = new Rectangulo(100, 100, 20, 20, "green", 5);
+        var dir = "";
+        var vel = 5;
+        var muros = [];
+
+        // Cambia las dimensiones del jugador para que coincidan con las de la imagen
+        var jugador = new Rectangulo(100, 100, 100, 100, null, 5); // Cambiar tamaño a 100x100
         var target = new Rectangulo(300, 300, 10, 10, "red", null);
+
         muros.push(new Rectangulo(150, 400, 200, 20, "black", null));
         muros.push(new Rectangulo(50, 200, 100, 20, "black", null));
         muros.push(new Rectangulo(300, 100, 150, 20, "black", null));
 
-        document.addEventListener("keypress", function (e) {
-            switch (e.keyCode) {
-                case 119: 
-                    dir = "arriba";
-                    break;
-                case 115: 
-                    dir = "abajo";
-                    break;
-                case 97: 
-                    dir = "izquierda";
-                    break;
-                case 100: 
-                    dir = "derecha";
-                    break;
-                case 32: 
-                    jugador.vel += 2.5;
-                    break;
+        document.addEventListener("keypress", function(e) {
+            if (e.keyCode === 112) { // P para pausar/reanudar
+                isPaused = !isPaused;
             }
-        });
-
-        function actualizar() {
-            switch (dir) {
-                case 'arriba':
-                    jugador.axisY -= vel;
-                    if (jugador.axisY <= 10) {
-                        jugador.axisY = 480;
-                    }
-                    break;
-                case 'abajo':
-                    jugador.axisY += vel;
-                    if (jugador.axisY > 500) {
-                        jugador.axisY = 0;
-                    }
-                    break;
-                case 'derecha':
-                    jugador.axisX += vel;
-                    if (jugador.axisX > 500) {
-                        jugador.axisX = 0;
-                    }
-                    break;
-                case 'izquierda':
-                    jugador.axisX -= vel;
-                    if (jugador.axisX <= 10) {
-                        jugador.axisX = 480;
-                    }
-                    break;
-            }
-
-            muros.forEach(function(muro, i,array){
-                if (jugador.deteccionColision(muro)) {
-                switch (dir) {
-                    case 'arriba':
-                        jugador.axisY += vel;
+            
+            if (!isPaused) {
+                switch (e.keyCode) {
+                    case 119: // W
+                        dir = "up";
                         break;
-                    case 'abajo':
-                        jugador.axisY -= vel;
+                    case 115: // S
+                        dir = "down";
                         break;
-                    case 'derecha':
-                        jugador.axisX -= vel;
+                    case 97:  // A
+                        dir = "left";
                         break;
-                    case 'izquierda':
-                        jugador.axisX += vel;
+                    case 100: // D
+                        dir = "right";
+                        break;
+                    case 32:  // Spacebar
+                        jugador.vel += 2.5;
                         break;
                 }
             }
-            })
-            
+        });
+
+        function update() {
+            if (!isPaused) {
+                switch (dir) {
+                    case 'up':
+                        jugador.axisY -= vel;
+                        if (jugador.axisY <= 0) jugador.axisY = 480;
+                        break;
+                    case 'down':
+                        jugador.axisY += vel;
+                        if (jugador.axisY >= 500) jugador.axisY = 0;
+                        break;
+                    case 'left':
+                        jugador.axisX -= vel;
+                        if (jugador.axisX <= 0) jugador.axisX = 580;
+                        break;
+                    case 'right':
+                        jugador.axisX += vel;
+                        if (jugador.axisX >= 600) jugador.axisX = 0;
+                        break;
+                }
+
+                muros.forEach(function(muro) {
+                    if (jugador.deteccionColision(muro)) {
+                        switch (dir) {
+                            case 'up':
+                                jugador.axisY += vel;
+                                break;
+                            case 'down':
+                                jugador.axisY -= vel;
+                                break;
+                            case 'left':
+                                jugador.axisX += vel;
+                                break;
+                            case 'right':
+                                jugador.axisX -= vel;
+                                break;
+                        }
+                    }
+                });
+
+                if (jugador.deteccionColision(target)) {
+                    target.axisX = Math.floor(Math.random() * (myCanvas.width - target.width));
+                    target.axisY = Math.floor(Math.random() * (myCanvas.height - target.height));
+                    sound.play(); // Reproducir sonido al colisionar con el target
+                    score += 10; // Incrementar el puntaje al alcanzar el target
+                }
+            }
         }
 
-        function moverTarget() {
-            target.axisX = Math.random() * (myCanvas.width - target.width);
-            target.axisY = Math.random() * (myCanvas.height - target.height);
-        }
-
-        function pintar() {
+        function paint() {
+            // Limpiar el canvas
             ctx.fillStyle = "white";
-            ctx.fillRect(0, 0, myCanvas.width, myCanvas.height);
-            ctx.fillStyle = "black";
-            ctx.fillText("Velocidad: " + jugador.vel, 10, 490);
+            ctx.fillRect(0, 0, 600, 500);
 
-            ctx.fillStyle = jugador.fillColor;
-            ctx.fillRect(jugador.axisX, jugador.axisY, jugador.width, jugador.height);
+            // Dibujar el jugador como imagen en lugar de rectángulo
+            ctx.drawImage(img, jugador.axisX, jugador.axisY, jugador.width, jugador.height);
+
+            // Dibujar el target
             ctx.fillStyle = target.fillColor;
             ctx.fillRect(target.axisX, target.axisY, target.width, target.height);
 
-            // ctx.fillStyle = muro.fillColor;
-
-            muros.forEach(function(muro, i,array){
+            // Dibujar los muros
+            muros.forEach(function(muro) {
+                ctx.fillStyle = muro.fillColor;
                 ctx.fillRect(muro.axisX, muro.axisY, muro.width, muro.height);
-            })
+            });
 
-            
+            // Dibujar el puntaje
+            ctx.fillStyle = "black";
+            ctx.font = "20px Arial";
+            ctx.fillText("Score: " + score, 10, 20); // Mostrar el puntaje en la esquina superior izquierda
 
-            if (jugador.deteccionColision(target)) {
-                moverTarget();
+            // Mostrar mensaje de "PAUSA" si el juego está pausado
+            if (isPaused) {
+                ctx.fillStyle = "black";
+                ctx.font = "40px Arial";
+                ctx.textAlign = "center";
+                ctx.fillText("P A U S A", myCanvas.width / 2, myCanvas.height / 2); // Texto centrado en la pantalla
             }
 
-            actualizar();
-            requestAnimationFrame(pintar);
+            update();
+            requestAnimationFrame(paint);
         }
 
-        requestAnimationFrame(pintar);
+        requestAnimationFrame(paint);
+
     </script>
 </body>
-
 </html>
